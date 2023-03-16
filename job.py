@@ -1,25 +1,25 @@
+import re
+import hashlib
 
-import time
+while True:
+    motdepasse = input("Entrez votre mot de passe : ")
 
-heure = (0, 0, 0)
-alarme = None
-
-def afficher_heure(h):
-    global heure
-    heure = h
-
-def regler_alarme(h):
-    global alarme
-    alarme = h
-
-def afficher_heure_courante():
-    global heure, alarme
-    while True:
-        heure_courante = time.localtime()
-        heure = (heure_courante.tm_hour, heure_courante.tm_min, heure_courante.tm_sec)
-        if alarme is not None and heure == alarme:
-            print("ALARME !!")
-        print(f"{heure[0]:02d}:{heure[1]:02d}:{heure[2]:02d}")
-        time.sleep(1)
-
-afficher_heure_courante()
+    if len(motdepasse) < 8:
+        print("Le mot de passe doit contenir au moins 8 caractères.")
+    
+    elif not re.search("[a-z]", motdepasse):
+       print("Le mot de passe doit contenir au moins une lettre minuscule.")
+    
+    elif not re.search("[A-Z]", motdepasse):
+      print("Le mot de passe doit contenir au moins une lettre majuscule.")
+    
+    elif not re.search ("[0-9]", motdepasse):
+       print("Le mot de passe doit contenir au moins un chiffre.")
+    
+    elif not re.search("[!@#$%^&*]", motdepasse):
+        print("Le mot de passe doit contenir au moins un caractère spécial (!, @, #, $, %, ^, &, *).")
+    
+    else: 
+        hash_object = hashlib.sha256(motdepasse.encode())
+        print("Le mot de passe est sécurisé et crypté :", hash_object.hexdigest())
+        break
